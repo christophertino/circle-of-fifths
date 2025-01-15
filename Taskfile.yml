@@ -1,0 +1,11 @@
+version: '3'
+
+tasks:
+  run:
+    - cmd: go run cmd/trainer/main.go {{.CLI_ARGS}}
+  run:fourths:
+    - cmd: go run cmd/trainer/main.go -f
+  run:random:
+    - cmd: go run cmd/trainer/main.go -r
+  help:
+    - cmd: go run cmd/trainer/main.go -h
