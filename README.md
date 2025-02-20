@@ -7,7 +7,7 @@ A guitar fretboard memorization tool using the Circle of Fifths. It can also be 
 This program requires PortAudio for audio input detection.
 
 ```sh
-$ brew install portaudio
+$ brew install portaudio pkg-config
 ```
 
 ## Running the Tool
@@ -18,10 +18,10 @@ $ go run cmd/trainer/main.go
 
 # Open help menu
 $ go run cmd/trainer/main.go -h
-	"--- Circle of Fifths Trainer ---"
-	"-f		Use the Circle of Fourths"
-	"-r		Randomize note order"
-	"-h		Show this help menu"
+  "--- Circle of Fifths Trainer ---"
+  "-f		Use the Circle of Fourths"
+  "-r		Randomize note order"
+  "-h		Show this help menu"
 ```
 
 ## License
