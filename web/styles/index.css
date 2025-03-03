@@ -1,6 +1,11 @@
+/**
+ * Circle of Fifths
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 body {
 	background-color: #f4f4f9;
-	font-family: Arial, sans-serif;
+	font-family: 'Roboto', Arial, sans-serif;
 	margin: 0;
 }
 .container {
@@ -10,10 +15,27 @@ body {
 }
 h1 {
 	color: #333;
+	font-family: 'Roboto', Arial, sans-serif;
 	font-size: 30px;
 	padding: 0;
-	margin: 100px 0 50px;
+	margin: 100px 0 20px;
 	text-align: center;
+}
+.speed-select {
+	margin: 0 0 35px;
+	text-align: center;
+}
+select, label {
+	color: #333;
+	font-family: 'Roboto', Arial, sans-serif;
+	font-size: 16px;
+}
+select {
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin: 0 0 0 10px;
+	padding: 5px;
 }
 .circle-of-fifths {
 	align-items: center;
@@ -61,7 +83,12 @@ h1 {
 	transform: translate(-50%, -50%);
 	width: 80px;
 }
-.pause {display: none;}
+.play, .pause {
+	display: none;
+	&.active {
+		display: block;
+	}
+}
 .circle-of-fifths .note:nth-child(1) {
 	transform: rotate(0deg) translate(0, -180px) rotate(0deg);
 }

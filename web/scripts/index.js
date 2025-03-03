@@ -1,26 +1,41 @@
+/**
+ * Circle of Fifths
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
 	const notes = document.querySelectorAll('.note');
 	const center = document.querySelector('.center');
+	const speed = document.getElementById('speed') || { value: 1000 };
 	const play = document.querySelector('.play');
 	const pause = document.querySelector('.pause');
 	const notesArray = Array.from(notes);
 	let currentNote = 0;
+	let intervalId;
 
 	center.addEventListener('click', () => {
-		currentNote = 0;
-		play.style.display = 'none';
-		pause.style.display = 'block';
+		// Pause
+		if (pause.classList.contains('active')) {
+			clearInterval(intervalId);
+			pause.classList.toggle('active');
+			play.classList.toggle('active');
+			return;
+		}
 
-		let intervalId = setInterval(() => {
+		// Play
+		pause.classList.toggle('active');
+		play.classList.toggle('active');
+
+		intervalId = setInterval(() => {
 			notesArray[currentNote].classList.add('active');
-			currentNote++;
-
-			if (currentNote === notesArray.length) {
+			if (++currentNote > notesArray.length - 1) {
 				clearInterval(intervalId);
-
-				play.style.display = 'block';
-				pause.style.display = 'none';
+				setTimeout(() => {
+					notes.forEach(note => note.classList.remove('active'));
+					pause.classList.toggle('active');
+					play.classList.toggle('active');
+					currentNote = 0;
+				}, speed.value);
 			}
-		}, 1000);
+		}, speed.value);
 	});
 });

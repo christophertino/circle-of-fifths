@@ -10,6 +10,14 @@
 <body>
 	<div class="container">
 		<h1>Circle of Fifths Trainer</h1>
+		<div class="speed-select">
+			<label for="speed">Choose Speed:</label>
+			<select id="speed">
+				<option value="500">0.5s</option>
+				<option value="1000">1s</option>
+				<option value="2000">2s</option>
+			</select>
+		</div>
 		<div class="circle-of-fifths">
 			<div class="note">C</div>
 			<div class="note">G</div>
@@ -24,7 +32,7 @@
 			<div class="note">Bb</div>
 			<div class="note">F</div>
 			<div class="center">
-				<svg class="play" fill="#fff" version="1.1" xmlns="http://www.w3.org/2000/svg"
+				<svg class="play active" fill="#fff" version="1.1" xmlns="http://www.w3.org/2000/svg"
 					xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60" xml:space="preserve">
 					<g>
 						<path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30
