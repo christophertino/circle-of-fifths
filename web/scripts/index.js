@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
 	const notes = document.querySelectorAll('.note');
 	const center = document.querySelector('.center');
 	const play = document.querySelector('.play');
@@ -6,17 +6,21 @@ document.addEventListener('DOMContentLoaded', function () {
 	const notesArray = Array.from(notes);
 	let currentNote = 0;
 
-	center.addEventListener('click', function () {
+	center.addEventListener('click', () => {
 		currentNote = 0;
 		play.style.display = 'none';
 		pause.style.display = 'block';
-		notesArray[currentNote].style.background = '#333';
-		notesArray[currentNote].style.textColor = '#fff';
 
-		setTimeout(() => {
+		let intervalId = setInterval(() => {
+			notesArray[currentNote].classList.add('active');
 			currentNote++;
-			notesArray[currentNote - 1].style.background = '#f7ca18';
-			notesArray[currentNote - 1].style.textColor = '#333';
-		}, 500);
+
+			if (currentNote === notesArray.length) {
+				clearInterval(intervalId);
+
+				play.style.display = 'block';
+				pause.style.display = 'none';
+			}
+		}, 1000);
 	});
 });
