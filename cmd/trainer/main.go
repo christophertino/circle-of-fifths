@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"net/http"
 
 	circleoffifths "github.com/christophertino/circle-of-fifths"
 )
@@ -26,6 +27,18 @@ func main() {
 		return
 	}
 
+	// Start web server
+	go func() {
+		fs := http.FileServer(http.Dir("./web"))
+		http.Handle("/", fs)
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+	log.Println("Web server listening on port 8080")
+
+	// Start portaudio
 	if err := circleoffifths.Start(fourths, randomize); err != nil {
 		log.Fatal("Error starting Trainer", err)
 	}

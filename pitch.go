@@ -1,10 +1,9 @@
 package circleoffifths
 
 import (
-	"fmt"
+	"log"
 	"math"
 	"math/cmplx"
-	"time"
 
 	"github.com/gordonklaus/portaudio"
 	"github.com/mjibson/go-dsp/fft"
@@ -12,8 +11,8 @@ import (
 
 const (
 	sampleRate   = 44100
-	bufferSize   = 2048
-	volumeThresh = 0.01 // Threshold to filter out noise
+	bufferSize   = 64  // Size of the audio buffer
+	volumeThresh = 1.0 // Threshold to filter out noise
 	A4Freq       = 440.0
 )
 
@@ -40,7 +39,7 @@ func Listen() error {
 	}
 	defer stream.Stop()
 
-	fmt.Println("Listening for notes...")
+	log.Println("Listening for notes...")
 
 	// Process audio data in real-time
 	for {
@@ -53,10 +52,8 @@ func Listen() error {
 		frequency := detectPitch(buffer, sampleRate)
 		if frequency > 0 {
 			note, diff := matchNoteToFrequency(frequency)
-			fmt.Printf("Detected pitch: %.2f Hz (Closest Note: %s, Difference: %.2f Hz)\n", frequency, note, diff)
+			log.Printf("Detected pitch: %.2f Hz (Closest Note: %s, Difference: %.2f Hz)\n", frequency, note, diff)
 		}
-
-		time.Sleep(100 * time.Millisecond) // Avoid spamming the console
 	}
 }
 
