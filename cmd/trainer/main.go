@@ -8,6 +8,11 @@ import (
 	circleoffifths "github.com/christophertino/circle-of-fifths"
 )
 
+const (
+	WEB_PORT    = "8080"
+	SOCKET_PORT = "8081"
+)
+
 func main() {
 	var (
 		showHelp  = flag.Bool("h", false, "Show help menu")
@@ -31,12 +36,23 @@ func main() {
 	go func() {
 		fs := http.FileServer(http.Dir("./web"))
 		http.Handle("/", fs)
-		err := http.ListenAndServe(":8080", nil)
+		err := http.ListenAndServe(":"+WEB_PORT, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}()
-	log.Println("Web server listening on port 8080")
+	log.Printf("Web server listening on port %s\n", WEB_PORT)
+
+	// Start websocket server
+	go func() {
+		// Define WebSocket route
+		http.HandleFunc("/ws", circleoffifths.SocketHandler)
+		err := http.ListenAndServe(":"+SOCKET_PORT, nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+	log.Printf("WebSocket server listening at ws://localhost:%s/ws\n", SOCKET_PORT)
 
 	// Start portaudio
 	if err := circleoffifths.Start(fourths, randomize); err != nil {

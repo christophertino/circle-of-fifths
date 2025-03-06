@@ -2,7 +2,7 @@
  * Circle of Fifths
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+(() => {
 	const notes = document.querySelectorAll('.note');
 	const center = document.querySelector('.center');
 	const speed = document.getElementById('speed') || { value: 1000 };
@@ -38,4 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}, speed.value);
 	});
-});
+
+	// WebSocket
+	const ws = new WebSocket("ws://localhost:8081/ws");
+	ws.onopen = () => ws.send("Hello from browser!");
+	ws.onmessage = (event) => console.log("Client Received:", event.data);
+
+})();
