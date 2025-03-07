@@ -40,8 +40,10 @@
 	});
 
 	// WebSocket
-	const ws = new WebSocket("ws://localhost:8081/ws");
-	ws.onopen = () => ws.send("Hello from browser!");
-	ws.onmessage = (event) => console.log("Client Received:", event.data);
-
+	const socket = (() => {
+		const ws = new WebSocket("ws://localhost:8081/ws");
+		ws.onmessage = (event) => {
+			console.log("Client Received:", event.data);
+		}
+	})();
 })();

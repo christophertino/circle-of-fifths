@@ -53,6 +53,8 @@ func Listen() error {
 		if frequency > 0 {
 			note, diff := matchNoteToFrequency(frequency)
 			log.Printf("Detected pitch: %.2f Hz (Closest Note: %s, Difference: %.2f Hz)\n", frequency, note, diff)
+			// Push the note to the WebSocket clients
+			broadcast <- note
 		}
 	}
 }

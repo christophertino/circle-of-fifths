@@ -46,13 +46,16 @@ func main() {
 	// Start websocket server
 	go func() {
 		// Define WebSocket route
-		http.HandleFunc("/ws", circleoffifths.SocketHandler)
+		http.HandleFunc("/ws", circleoffifths.HandleConnections)
 		err := http.ListenAndServe(":"+SOCKET_PORT, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}()
 	log.Printf("WebSocket server listening at ws://localhost:%s/ws\n", SOCKET_PORT)
+
+	// Broadcast messages to clients
+	go circleoffifths.HandleMessages()
 
 	// Start portaudio
 	if err := circleoffifths.Start(fourths, randomize); err != nil {
