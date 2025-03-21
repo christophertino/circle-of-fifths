@@ -17,14 +17,14 @@
 		// Pause
 		if (pause.classList.contains('active')) {
 			clearInterval(intervalId);
-			pause.classList.toggle('active');
-			play.classList.toggle('active');
+			pause.classList.remove('active');
+			play.classList.add('active');
 			return;
 		}
 
 		// Play
-		pause.classList.toggle('active');
-		play.classList.toggle('active');
+		pause.classList.add('active');
+		play.classList.remove('active');
 
 		intervalId = setInterval(() => {
 			notesArray[currentNote].classList.add('active');
@@ -32,8 +32,8 @@
 				setTimeout(() => {
 					if (loop.value === 'false') {
 						clearInterval(intervalId);
-						pause.classList.toggle('active');
-						play.classList.toggle('active');
+						pause.classList.remove('active');
+						play.classList.add('active');
 					}
 					notes.forEach(note => note.classList.remove('active'));
 					currentNote = 0;
