@@ -18,13 +18,9 @@ $ go run cmd/trainer/main.go
 
 # Open help menu
 $ go run cmd/trainer/main.go -h
-  "--- Circle of Fifths Trainer ---"
-  "-f		Use the Circle of Fourths"
-  "-r		Randomize note order"
-  "-h		Show this help menu"
-```
 
 ## License
 MIT License. Copyright 2025-Present Christopher Tino. All rights reserved.
 
 See [LICENSE](LICENSE)
+```

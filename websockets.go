@@ -1,6 +1,8 @@
 package circleoffifths
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"sync"
@@ -47,6 +49,19 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			mutex.Unlock()
 			break
 		}
+
+		// Parse JSON message
+		var m struct {
+			Name string `json:"name"`
+			Data string `json:"data"`
+		}
+		if err := json.Unmarshal(msg, &m); err != nil {
+			log.Println("Error parsing JSON:", err)
+			continue
+		}
+
+		// Print received message
+		fmt.Printf("Received: %+v\n", m)
 
 		// Broadcast the message to all clients
 		broadcast <- string(msg)

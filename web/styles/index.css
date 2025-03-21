@@ -128,8 +128,11 @@ select {
 		}
 	}
 }
-.node-name {
+.note-name {
 	font-weight: bold;
 	margin: 35px 0;
 	text-align: center;
+	#note-value {
+		margin-left: 15px;
+	}
 }

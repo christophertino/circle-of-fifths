@@ -11,9 +11,11 @@
 	const mode = document.getElementById('mode');
 	const play = document.querySelector('.play');
 	const pause = document.querySelector('.pause');
+	const noteValue = document.getElementById('note-value');
 	const notesArray = Array.from(notes);
 	const fourths = ["B", "E", "A", "D", "G", "C", "F", "Bb", "Eb", "Ab", "Db", "Gb"];
 	const fifths  = ["C", "G", "D", "A", "E", "B", "F#", "C#/Db", "G#/Ab", "D#/Eb", "A#/Bb", "F"];
+	const ws = new WebSocket("ws://localhost:8081/ws");
 	let currentNote = 0;
 	let intervalId;
 
@@ -54,19 +56,18 @@
 				note.textContent = fourths[index];
 			});
 			h1.textContent = 'Circle of Fourths Trainer';
+			ws.send(JSON.stringify({ name: 'mode', data: 'fourths' }));
 		} else {
 			notesArray.forEach((note, index) => {
 				note.textContent = fifths[index];
 			});
 			h1.textContent = 'Circle of Fifths Trainer';
+			ws.send(JSON.stringify({ name: 'mode', data: 'fifths' }));
 		}
 	});
 
-	// WebSocket
-	const socket = (() => {
-		const ws = new WebSocket("ws://localhost:8081/ws");
-		ws.onmessage = (event) => {
-			document.querySelector('.note-name').textContent = event.data;
-		}
-	})();
+	// WebSockets
+	ws.onmessage = (event) => {
+		noteValue.textContent = event.data;
+	}
 })();
