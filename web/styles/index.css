@@ -21,9 +21,12 @@ h1 {
 	margin: 50px 0 20px;
 	text-align: center;
 }
-.speed-select {
+.option-select {
 	margin: 0 0 35px;
 	text-align: center;
+	select {
+		margin: 0 10px;
+	}
 }
 select, label {
 	color: #333;
@@ -48,80 +51,85 @@ select {
 	margin: 0 auto;
 	position: relative;
 	width: 400px;
-}
-.note {
-	align-items: center;
-	background: #f7ca18;
-	border-radius: 50%;
-	color: #333;
-	display: flex;
-	font-weight: bold;
-	height: 60px;
-	justify-content: center;
-	position: absolute;
-	text-align: center;
-	width: 60px;
-	&.active {
+	& .note {
+		align-items: center;
+		background: #f7ca18;
+		border-radius: 50%;
+		color: #333;
+		display: flex;
+		font-weight: bold;
+		height: 60px;
+		justify-content: center;
+		position: absolute;
+		text-align: center;
+		width: 60px;
+		&.active {
+			background: #333;
+			color: #fff;
+		}
+		&:nth-child(1) {
+			transform: rotate(0deg) translate(0, -180px) rotate(0deg);
+		}
+		&:nth-child(2) {
+			transform: rotate(30deg) translate(0, -180px) rotate(-30deg);
+		}
+		&:nth-child(3) {
+			transform: rotate(60deg) translate(0, -180px) rotate(-60deg);
+		}
+		&:nth-child(4) {
+			transform: rotate(90deg) translate(0, -180px) rotate(-90deg);
+		}
+		&:nth-child(5) {
+			transform: rotate(120deg) translate(0, -180px) rotate(-120deg);
+		}
+		&:nth-child(6) {
+			transform: rotate(150deg) translate(0, -180px) rotate(-150deg);
+		}
+		&:nth-child(7) {
+			transform: rotate(180deg) translate(0, -180px) rotate(-180deg);
+		}
+		&:nth-child(8) {
+			transform: rotate(210deg) translate(0, -180px) rotate(-210deg);
+		}
+		&:nth-child(9) {
+			transform: rotate(240deg) translate(0, -180px) rotate(-240deg);
+		}
+		&:nth-child(10) {
+			transform: rotate(270deg) translate(0, -180px) rotate(-270deg);
+		}
+		&:nth-child(11) {
+			transform: rotate(300deg) translate(0, -180px) rotate(-300deg);
+		}
+		&:nth-child(12) {
+			transform: rotate(330deg) translate(0, -180px) rotate(-330deg);
+		}
+	}
+	.center {
+		align-items: center;
 		background: #333;
+		border-radius: 50%;
 		color: #fff;
+		cursor: pointer;
+		display: flex;
+		font-size: 14px;
+		height: 80px;
+		justify-content: center;
+		left: 50%;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 80px;
+	}
+	.play, .pause {
+		display: none;
+		&.active {
+			display: block;
+		}
 	}
 }
-.center {
-	align-items: center;
-	background: #333;
-	border-radius: 50%;
-	color: #fff;
-	cursor: pointer;
-	display: flex;
-	font-size: 14px;
-	height: 80px;
-	justify-content: center;
-	left: 50%;
-	position: absolute;
+.node-name {
+	font-weight: bold;
+	margin: 35px 0;
 	text-align: center;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	width: 80px;
-}
-.play, .pause {
-	display: none;
-	&.active {
-		display: block;
-	}
-}
-.circle-of-fifths .note:nth-child(1) {
-	transform: rotate(0deg) translate(0, -180px) rotate(0deg);
-}
-.circle-of-fifths .note:nth-child(2) {
-	transform: rotate(30deg) translate(0, -180px) rotate(-30deg);
-}
-.circle-of-fifths .note:nth-child(3) {
-	transform: rotate(60deg) translate(0, -180px) rotate(-60deg);
-}
-.circle-of-fifths .note:nth-child(4) {
-	transform: rotate(90deg) translate(0, -180px) rotate(-90deg);
-}
-.circle-of-fifths .note:nth-child(5) {
-	transform: rotate(120deg) translate(0, -180px) rotate(-120deg);
-}
-.circle-of-fifths .note:nth-child(6) {
-	transform: rotate(150deg) translate(0, -180px) rotate(-150deg);
-}
-.circle-of-fifths .note:nth-child(7) {
-	transform: rotate(180deg) translate(0, -180px) rotate(-180deg);
-}
-.circle-of-fifths .note:nth-child(8) {
-	transform: rotate(210deg) translate(0, -180px) rotate(-210deg);
-}
-.circle-of-fifths .note:nth-child(9) {
-	transform: rotate(240deg) translate(0, -180px) rotate(-240deg);
-}
-.circle-of-fifths .note:nth-child(10) {
-	transform: rotate(270deg) translate(0, -180px) rotate(-270deg);
-}
-.circle-of-fifths .note:nth-child(11) {
-	transform: rotate(300deg) translate(0, -180px) rotate(-300deg);
-}
-.circle-of-fifths .note:nth-child(12) {
-	transform: rotate(330deg) translate(0, -180px) rotate(-330deg);
 }
