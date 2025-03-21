@@ -3,13 +3,17 @@
  */
 
 (() => {
+	const h1 = document.querySelector('h1');
 	const notes = document.querySelectorAll('.note');
 	const center = document.querySelector('.center');
 	const speed = document.getElementById('speed') || { value: 1000 };
 	const loop = document.getElementById('loop');
+	const mode = document.getElementById('mode');
 	const play = document.querySelector('.play');
 	const pause = document.querySelector('.pause');
 	const notesArray = Array.from(notes);
+	const fourths = ["B", "E", "A", "D", "G", "C", "F", "Bb", "Eb", "Ab", "Db", "Gb"];
+	const fifths  = ["C", "G", "D", "A", "E", "B", "F#", "C#/Db", "G#/Ab", "D#/Eb", "A#/Bb", "F"];
 	let currentNote = 0;
 	let intervalId;
 
@@ -42,6 +46,20 @@
 				currentNote++;
 			}
 		}, speed.value);
+	});
+
+	mode.addEventListener('change', () => {
+		if (mode.value === 'fourths') {
+			notesArray.forEach((note, index) => {
+				note.textContent = fourths[index];
+			});
+			h1.textContent = 'Circle of Fourths Trainer';
+		} else {
+			notesArray.forEach((note, index) => {
+				note.textContent = fifths[index];
+			});
+			h1.textContent = 'Circle of Fifths Trainer';
+		}
 	});
 
 	// WebSocket
