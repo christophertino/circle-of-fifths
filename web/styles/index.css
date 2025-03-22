@@ -24,9 +24,6 @@ h1 {
 .option-select {
 	margin: 0 0 35px;
 	text-align: center;
-	select {
-		margin: 0 10px;
-	}
 }
 select, label {
 	color: #333;
@@ -37,8 +34,8 @@ select {
 	background: #fff;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	margin: 0 0 0 10px;
-	padding: 5px;
+	margin: 0 20px 0 5px;
+	padding: 8px;
 }
 .circle-of-fifths {
 	align-items: center;

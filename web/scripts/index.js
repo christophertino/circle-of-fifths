@@ -57,12 +57,21 @@
 			});
 			h1.textContent = 'Circle of Fourths Trainer';
 			ws.send(JSON.stringify({ name: 'mode', data: 'fourths' }));
-		} else {
+		} else if (mode.value === 'fifths') {
 			notesArray.forEach((note, index) => {
 				note.textContent = fifths[index];
 			});
 			h1.textContent = 'Circle of Fifths Trainer';
 			ws.send(JSON.stringify({ name: 'mode', data: 'fifths' }));
+		} else if (mode.value === 'random') {
+			for (let i = 0; i < notesArray.length; i++) {
+				let j = Math.floor(Math.random() * (i + 1));
+				let temp = notesArray[i].textContent;
+				notesArray[i].textContent = notesArray[j].textContent;
+				notesArray[j].textContent = temp;
+			}
+			h1.textContent = 'Random Note Trainer';
+			ws.send(JSON.stringify({ name: 'mode', data: 'random' }));
 		}
 	});
 
