@@ -77,7 +77,6 @@
 
 	// WebSocket receive message
 	ws.onmessage = (event) => {
-		console.log(event.data);
 		noteValue.textContent = event.data;
 	}
 
