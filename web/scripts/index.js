@@ -19,6 +19,7 @@
 	let currentNote = 0;
 	let intervalId;
 
+	// Play / Pause
 	center.addEventListener('click', () => {
 		// Pause
 		if (pause.classList.contains('active')) {
@@ -43,6 +44,9 @@
 					}
 					notes.forEach(note => note.classList.remove('active'));
 					currentNote = 0;
+					if (loop.value === 'true' && mode.value === 'random') {
+						randomizeNotes();
+					}
 				}, speed.value);
 			} else {
 				currentNote++;
@@ -50,6 +54,7 @@
 		}, speed.value);
 	});
 
+	// Change note order
 	mode.addEventListener('change', () => {
 		if (mode.value === 'fourths') {
 			notesArray.forEach((note, index) => {
@@ -64,12 +69,7 @@
 			h1.textContent = 'Circle of Fifths Trainer';
 			ws.send(JSON.stringify({ name: 'mode', data: 'fifths' }));
 		} else if (mode.value === 'random') {
-			for (let i = 0; i < notesArray.length; i++) {
-				let j = Math.floor(Math.random() * (i + 1));
-				let temp = notesArray[i].textContent;
-				notesArray[i].textContent = notesArray[j].textContent;
-				notesArray[j].textContent = temp;
-			}
+			randomizeNotes();
 			h1.textContent = 'Random Note Trainer';
 			ws.send(JSON.stringify({ name: 'mode', data: 'random' }));
 		}
@@ -108,4 +108,14 @@
 	}).catch(err => {
 		console.error(err);
 	});
+
+	// Randomize the notes array
+	const randomizeNotes = () => {
+		for (let i = 0; i < notesArray.length; i++) {
+			let j = Math.floor(Math.random() * (i + 1));
+			let temp = notesArray[i].textContent;
+			notesArray[i].textContent = notesArray[j].textContent;
+			notesArray[j].textContent = temp;
+		}
+	}
 })();
