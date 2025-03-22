@@ -2,8 +2,6 @@ version: "3"
 
 tasks:
   run:
-    - cmd: go run cmd/trainer/main.go {{.CLI_ARGS}}
+    - cmd: go run cmd/server/main.go {{.CLI_ARGS}}
   web:
     - cmd: open http://localhost:8080/
-  help:
-    - cmd: go run cmd/trainer/main.go -h

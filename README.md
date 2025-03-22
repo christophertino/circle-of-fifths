@@ -21,9 +21,6 @@ $ task run
 # Open Web UI
 $ task web
 
-# Open help menu
-$ task help
-
 ## License
 MIT License. Copyright 2025-Present Christopher Tino. All rights reserved.
 

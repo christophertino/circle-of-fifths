@@ -5,58 +5,26 @@ import (
 	"math"
 	"math/cmplx"
 
-	"github.com/gordonklaus/portaudio"
 	"github.com/mjibson/go-dsp/fft"
 )
 
 const (
 	sampleRate   = 44100
-	bufferSize   = 64  // Size of the audio buffer
 	volumeThresh = 1.0 // Threshold to filter out noise
 	A4Freq       = 440.0
 )
 
 var noteNames = []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"}
 
-// Listen uses portaudio to detect notes via the device microphone
-func Listen() error {
-	// Initialize PortAudio
-	if err := portaudio.Initialize(); err != nil {
-		return err
+// Analyze the buffer for pitch
+func processAudio(buffer []float32, sampleRate int) (float64, string) {
+	frequency := detectPitch(buffer, sampleRate)
+	if frequency > 0 {
+		note, diff := matchNoteToFrequency(frequency)
+		log.Printf("Detected pitch: %.2f Hz (Closest Note: %s, Difference: %.2f Hz)\n", frequency, note, diff)
+		return frequency, note
 	}
-	defer portaudio.Terminate()
-
-	// Create audio input stream
-	buffer := make([]float32, bufferSize)
-	stream, err := portaudio.OpenDefaultStream(1, 0, float64(sampleRate), len(buffer), buffer)
-	if err != nil {
-		return err
-	}
-	defer stream.Close()
-
-	if err := stream.Start(); err != nil {
-		return err
-	}
-	defer stream.Stop()
-
-	log.Println("Listening for notes...")
-
-	// Process audio data in real-time
-	for {
-		// Read audio data into the buffer
-		if err := stream.Read(); err != nil {
-			return err
-		}
-
-		// Analyze the buffer for pitch
-		frequency := detectPitch(buffer, sampleRate)
-		if frequency > 0 {
-			note, diff := matchNoteToFrequency(frequency)
-			log.Printf("Detected pitch: %.2f Hz (Closest Note: %s, Difference: %.2f Hz)\n", frequency, note, diff)
-			// Push the note to the WebSocket clients
-			broadcast <- note
-		}
-	}
+	return 0, ""
 }
 
 // detectPitch estimates the pitch frequency from the audio buffer

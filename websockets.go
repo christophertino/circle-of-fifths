@@ -1,9 +1,11 @@
 package circleoffifths
 
 import (
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"net/http"
 	"sync"
 
@@ -41,7 +43,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 
 	// Keep the connection open to listen for messages
 	for {
-		_, msg, err := conn.ReadMessage()
+		messageType, msg, err := conn.ReadMessage()
 		if err != nil {
 			log.Println("Client disconnected:", err)
 			mutex.Lock()
@@ -50,21 +52,34 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		// Parse JSON message
-		var m struct {
-			Name string `json:"name"`
-			Data string `json:"data"`
-		}
-		if err := json.Unmarshal(msg, &m); err != nil {
-			log.Println("Error parsing JSON:", err)
-			continue
+		if messageType == websocket.TextMessage {
+			// Parse JSON message
+			var m struct {
+				Name string `json:"name"`
+				Data string `json:"data"`
+			}
+			if err := json.Unmarshal(msg, &m); err != nil {
+				log.Println("Error parsing JSON:", err)
+				continue
+			}
+			// Print received message
+			fmt.Printf("Received: %+v\n", m)
 		}
 
-		// Print received message
-		fmt.Printf("Received: %+v\n", m)
+		if messageType == websocket.BinaryMessage {
+			// Convert byte slice to Float32 slice (PCM data)
+			audioSamples := make([]float32, len(msg)/4)
+			for i := 0; i < len(audioSamples); i++ {
+				audioSamples[i] = math.Float32frombits(binary.LittleEndian.Uint32(msg[i*4 : (i+1)*4]))
+			}
 
-		// Broadcast the message to all clients
-		broadcast <- string(msg)
+			// Process the PCM audio data
+			_, note := processAudio(audioSamples, 44100)
+			if note != "" {
+				// Push the note to the WebSocket clients
+				broadcast <- note
+			}
+		}
 	}
 }
 

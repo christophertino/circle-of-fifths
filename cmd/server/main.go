@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"net/http"
 
@@ -14,20 +13,6 @@ const (
 )
 
 func main() {
-	var (
-		showHelp = flag.Bool("h", false, "Show help menu")
-	)
-	flag.Parse()
-
-	help := "--- Circle of Fifths Trainer --- \n" +
-		"main.go \n" +
-		"-h		Show this help menu \n"
-
-	if *showHelp {
-		log.Println(help)
-		return
-	}
-
 	// Start web server
 	go func() {
 		fs := http.FileServer(http.Dir("./web"))
@@ -41,7 +26,6 @@ func main() {
 
 	// Start websocket server
 	go func() {
-		// Define WebSocket route
 		http.HandleFunc("/ws", circleoffifths.HandleConnections)
 		err := http.ListenAndServe(":"+SOCKET_PORT, nil)
 		if err != nil {
@@ -50,11 +34,9 @@ func main() {
 	}()
 	log.Printf("WebSocket server listening at ws://localhost:%s/ws\n", SOCKET_PORT)
 
-	// Broadcast messages to clients
+	// Broadcast websocket messages to clients
 	go circleoffifths.HandleMessages()
 
-	// Start portaudio
-	if err := circleoffifths.Start(); err != nil {
-		log.Fatal("Error starting Trainer", err)
-	}
+	// Block forever
+	select {}
 }

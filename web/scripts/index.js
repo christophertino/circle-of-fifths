@@ -75,8 +75,38 @@
 		}
 	});
 
-	// WebSockets
+	// WebSocket receive message
 	ws.onmessage = (event) => {
+		console.log(event.data);
 		noteValue.textContent = event.data;
 	}
+
+	// Listen for audio data
+	navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+		const audioContext = new AudioContext();
+		const sampleRate = audioContext.sampleRate; // 44100 Hz (default)
+		const source = audioContext.createMediaStreamSource(stream);
+		const processor = audioContext.createScriptProcessor(4096, 1, 1);
+
+		source.connect(processor);
+		processor.connect(audioContext.destination);
+
+		processor.onaudioprocess = event => {
+			let audioData = event.inputBuffer.getChannelData(0); // Get PCM data (Float32Array)
+
+			// Convert Float32Array to ArrayBuffer (raw PCM)
+			let buffer = new ArrayBuffer(audioData.length * 4);
+			let view = new DataView(buffer);
+			for (let i = 0; i < audioData.length; i++) {
+				view.setFloat32(i * 4, audioData[i], true);
+			}
+
+			if (ws.readyState === WebSocket.OPEN) {
+				ws.binaryType = "arraybuffer";
+				ws.send(buffer);
+			}
+		};
+	}).catch(err => {
+		console.error(err);
+	});
 })();
