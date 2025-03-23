@@ -13,7 +13,7 @@ $ brew install portaudio pkg-config
 ## Running the Tool
 
 ```sh
-# Start the trainer
+# Start the server
 $ task run
 ```
 
@@ -21,6 +21,10 @@ $ task run
 # Open Web UI
 $ task web
 ```
+
+## How to Play
+
+First, choose your tempo and note order. Hit the play button and fret the notes on your guitar as they're highlighted on the circle. The tool will detect the note played and match it against the correct frequency.
 
 ## License
 

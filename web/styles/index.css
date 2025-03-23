@@ -13,16 +13,22 @@ body {
 	max-width: 960px;
 	padding: 20px;
 }
-h1 {
+h1, h2 {
 	color: #333;
 	font-family: 'Roboto', Arial, sans-serif;
-	font-size: 30px;
 	padding: 0;
-	margin: 50px 0 20px;
+}
+h1 {
+	font-size: 30px;
+	margin: 50px 0 35px;
 	text-align: center;
 }
+h2 {
+	font-size: 24px;
+	margin: 0 0 20px;
+}
 .option-select {
-	margin: 0 0 35px;
+	margin: 0 0 50px;
 	text-align: center;
 }
 select, label {
@@ -125,11 +131,43 @@ select {
 		}
 	}
 }
-.note-name {
+.note-played {
 	font-weight: bold;
 	margin: 35px 0;
 	text-align: center;
 	#note-value {
 		margin-left: 15px;
+	}
+}
+.results {
+	margin: 35px auto;
+	max-width: 600px;
+	table {
+		border-collapse: collapse;
+		margin: 0 auto;
+		width: 100%;
+		th, td {
+			border-right: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+			&:last-child {
+				border-right: none;
+			}
+		}
+		tr {
+			border-bottom: 1px solid #ccc;
+			&:last-child {
+				border-bottom: none;
+			}
+			&:nth-child(even) td {
+				background: #f9f9f9;
+			}
+		}
+		th {
+			background: #f7ca18;
+		}
+		td {
+			background: #fff;
+		}
 	}
 }
