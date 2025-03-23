@@ -74,7 +74,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			}
 
 			// Process the PCM audio data
-			_, note := processAudio(audioSamples, 44100)
+			_, note := processAudio(audioSamples)
 			if note != "" {
 				// Push the note to the WebSocket clients
 				broadcast <- note

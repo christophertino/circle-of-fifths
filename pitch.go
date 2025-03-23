@@ -17,8 +17,8 @@ const (
 var noteNames = []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"}
 
 // Analyze the buffer for pitch
-func processAudio(buffer []float32, sampleRate int) (float64, string) {
-	frequency := detectPitch(buffer, sampleRate)
+func processAudio(buffer []float32) (float64, string) {
+	frequency := detectPitch(buffer)
 	if frequency > 0 {
 		note, diff := matchNoteToFrequency(frequency)
 		log.Printf("Detected pitch: %.2f Hz (Closest Note: %s, Difference: %.2f Hz)\n", frequency, note, diff)
@@ -28,7 +28,7 @@ func processAudio(buffer []float32, sampleRate int) (float64, string) {
 }
 
 // detectPitch estimates the pitch frequency from the audio buffer
-func detectPitch(buffer []float32, sampleRate int) float64 {
+func detectPitch(buffer []float32) float64 {
 	// Convert buffer to a slice of complex numbers for FFT
 	complexBuffer := make([]complex128, len(buffer))
 	for i, sample := range buffer {
