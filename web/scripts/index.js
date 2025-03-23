@@ -45,6 +45,10 @@
 
 		intervalId = setInterval(() => {
 			notesArray[currentNote].classList.add('active');
+			if (currentNote > 0) {
+				notesArray[currentNote-1].classList.add('played');
+				notesArray[currentNote-1].classList.remove('active');
+			}
 			if (currentNote >= notesArray.length - 1) {
 				if (loop.value === 'false') {
 					clearInterval(intervalId);
@@ -54,7 +58,7 @@
 				currentNote = 0;
 				// Allow time for user to see the last note
 				setTimeout(() => {
-					notesArray.forEach(note => note.classList.remove('active'));
+					notesArray.forEach(note => note.classList.remove('played', 'active'));
 					if (loop.value === 'true') {
 						notesArray[0].classList.add('active');
 						if (mode.value === 'random') {

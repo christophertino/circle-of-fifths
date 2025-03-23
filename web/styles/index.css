@@ -70,6 +70,10 @@ select {
 			background: #333;
 			color: #fff;
 		}
+		&.played {
+			background: #ccc;
+			color: #fff;
+		}
 		&:nth-child(1) {
 			transform: rotate(0deg) translate(0, -180px) rotate(0deg);
 		}
