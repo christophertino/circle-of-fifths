@@ -52,8 +52,6 @@
 					play.classList.add('active');
 				}
 				currentNote = 0;
-				noteMap.clear();
-				round++;
 				// Allow time for user to see the last note
 				setTimeout(() => {
 					notesArray.forEach(note => note.classList.remove('active'));
@@ -66,6 +64,11 @@
 							addRows();
 						}
 					}
+					// Reset the stat counters
+					noteMap.clear();
+					round++;
+					correct = 0;
+					incorrect = 0;
 				}, speed.value);
 			} else {
 				currentNote++;
@@ -96,7 +99,8 @@
 
 	// WebSocket receive message
 	ws.onmessage = (event) => {
-		if (!noteMap.has(currentNote)) {
+		// Game is playing and only accept one message per note
+		if (pause.classList.contains('active') && !noteMap.has(currentNote)) {
 			noteMap.set(currentNote, event.data);
 			noteValue.textContent = event.data;
 			keepScore(event.data);
@@ -148,10 +152,12 @@
 		} else {
 			incorrect++;
 		}
-		let row = resultsTable.getChildNodes()[round];
-		row.querySelector('.correct').textContent = correct;
-		row.querySelector('.incorrect').textContent = incorrect;
-		row.querySelector('.accuracy').textContent = Math.round((correct / (correct + incorrect)) * 100) + '%';
+		let row = resultsTable.rows[round];
+		if (row) {
+			row.cells[1].textContent = correct;
+			row.cells[2].textContent = incorrect;
+			row.cells[3].textContent = Math.round((correct / (correct + incorrect)) * 100) + '%';
+		}
 	}
 
 	// Add rows to results table
